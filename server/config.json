@@ -1,0 +1,4 @@
+{
+    "connectionString": "mongodb://localhost/roadside-assistant",
+    "secret": "I LIKE GREEN EGGS AND HAM"
+}
