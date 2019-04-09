@@ -1,6 +1,13 @@
+<style>
+.loginForm {
+    padding: 200px 0;
+}
+</style>
+
 <template>
-    <div>
+    <div class="loginForm">
         <h2>Login Page</h2>
+        <br>
         <Form @submit.prevent="onSubmit" label-position="top" :rules="loginRules">
             <FormItem label="Username" prop="username">
                 <Input type="text" v-model="username" placeholder="Enter your username">
@@ -13,7 +20,7 @@
                 </Input>
             </FormItem>
             <FormItem>
-                <Button type="primary" :disabled="loading">Login</Button>
+                <Button type="primary" :disabled="status.logginIn" long>Login</Button>
             </FormItem>
         </Form>
     </div>
@@ -22,6 +29,7 @@
 <script>
 import { router } from '@/_helpers';
 import { authenticationService } from '@/_services';
+import { mapState, mapActions } from 'vuex';
 
 export default {
     data () {
@@ -37,10 +45,12 @@ export default {
                     { type: 'string', min: 6, message: 'The password length cannot be less than 6 characters', trigger: 'blur' }
                 ]
             },
-            loading: false,
             returnUrl: '',
             error: ''
         };
+    },
+    computed: {
+        ...mapState('account', ['status'])
     },
     created () {
         if (authenticationService.currentUserValue) {
