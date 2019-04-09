@@ -17,9 +17,9 @@
             <Row type="flex" justify="center" align="middle">
                 <Col span="6">
                     <Alert v-if="alert.message" :type="`${alert.type}`" show-icon>{{alert.message}}</Alert>
-                    <router-view></router-view>
                 </Col>
             </Row>
+            <router-view></router-view>
         </div>
     </div>
 </template>

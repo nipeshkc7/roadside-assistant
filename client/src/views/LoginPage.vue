@@ -6,23 +6,26 @@
 
 <template>
     <div class="loginForm">
-        <h2>Login Page</h2>
-        <br>
-        <Form @submit.prevent="onSubmit" label-position="top" :rules="loginRules">
-            <FormItem label="Username" prop="username">
-                <Input type="text" v-model="username" placeholder="Enter your username">
-                    <Icon type="ios-person-outline" slot="prepend"></Icon>
-                </Input>
-            </FormItem>
-            <FormItem label="Password" prop="password">
-                <Input type="password" v-model="password" placeholder="Enter your password">
-                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
-                </Input>
-            </FormItem>
-            <FormItem>
-                <Button type="primary" :disabled="status.logginIn" long>Login</Button>
-            </FormItem>
-        </Form>
+        <Row type="flex" justify="center" align="middle">
+            <Col span="6">
+                <Form @submit.prevent="onSubmit" label-position="top" :rules="loginRules">
+                    <FormItem label="Username" prop="username">
+                        <Input type="text" v-model="username" placeholder="Enter your username">
+                            <Icon type="ios-person-outline" slot="prepend"></Icon>
+                        </Input>
+                    </FormItem>
+                    <FormItem label="Password" prop="password">
+                        <Input type="password" v-model="password" placeholder="Enter your password">
+                            <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                        </Input>
+                    </FormItem>
+                    <FormItem>
+                        <Button type="primary" :disabled="status.logginIn">Login</Button>
+                        <Button type="text" to="/register">Register</Button>
+                    </FormItem>
+                </Form>    
+            </Col>
+        </Row>
     </div>
 </template>
 
@@ -45,8 +48,7 @@ export default {
                     { type: 'string', min: 6, message: 'The password length cannot be less than 6 characters', trigger: 'blur' }
                 ]
             },
-            returnUrl: '',
-            error: ''
+            returnUrl: ''
         };
     },
     computed: {
@@ -60,8 +62,13 @@ export default {
         this.returnUrl = this.$route.query.returnUrl || '/';
     },
     methods: {
-        onSubmit () {
-        }
+        ...mapActions('account', ['login']),
+        onSubmit (e) {
+            const { username, password } = this;
+            if (username && password) {
+                this.login({ username, password })
+            }
+        },
     }
 };
 </script>

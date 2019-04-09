@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import { authenticationService } from '@/_services';
-import LandingPage from '@/views/LandingPage';
+import RegisterPage from '@/views/RegisterPage';
 import HomePage from '@/views/HomePage';
 import LoginPage from '@/views/LoginPage';
 import AdminPage from '@/views/AdminPage';
@@ -18,8 +18,8 @@ export const router = new Router({
             meta: { authorize: [] }
         },
         {
-            path: '/landing',
-            component: LandingPage
+            path: '/register',
+            component: RegisterPage
         },
         {
             path: '/login',

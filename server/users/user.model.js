@@ -6,7 +6,7 @@ const schema = new Schema({
     hash: { type: String, required: true }, // Hash is just the hashed value of the users password
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    role: { type: String, required: true }, // Either admin, member or driver
+    role: { type: String, required: true }, // Either admin, member or professional
     dateCreated: { type: Date, default: Date.now }
 });
 

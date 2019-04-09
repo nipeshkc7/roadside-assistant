@@ -5,8 +5,7 @@ const router = express.Router();
 
 // Routes
 router.post('/authenticate', authenticate); // Public route
-router.post('/member_register', member_register); // Public route
-router.post('/professional_register', professional_register) // Public route
+router.post('/register', register); // Public route
 router.get('/', authorize('Admin'), getAll); // Admin only route
 router.get('/current', authorize(), getCurrent);
 router.get('/:id', authorize(), getById);
@@ -21,13 +20,7 @@ function authenticate(req, res, next) {
         .catch(err => next(err));
 }
 
-function member_register(req, res, next) {
-    userService.create(req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
-}
-
-function professional_register(req, res, next) {
+function register(req, res, next) {
     userService.create(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
