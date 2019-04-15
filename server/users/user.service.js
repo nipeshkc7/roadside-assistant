@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
 const User = db.User;
+const Member = db.Member;
 
 module.exports = {
     authenticate,
@@ -39,7 +40,12 @@ async function create(userParam) {
         throw 'Username "' + userParam.username + '"is already taken';
     }
 
-    const user = new User(userParam);
+    const user = new User({
+        username: userParam.username,
+        firstName: userParam.firstName,
+        lastName: userParam.lastName,
+        role: userParam.role,
+    });
 
     // Hash password
     if (userParam.password) {
@@ -48,6 +54,16 @@ async function create(userParam) {
 
     // Save user
     await user.save();
+
+    // If user registering is registering as a member not a professional
+    if(userParam.role === "Member" && userParam.membershipType) {
+        const member = new Member({
+            memberID: user._id,
+            membershipType: userParam.membershipType,
+        });
+
+        await member.save();
+    }
 }
 
 async function update(id, userParam) {

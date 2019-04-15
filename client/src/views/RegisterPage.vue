@@ -63,15 +63,39 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
     data () {
         return {
-            current: 0
+            user: {
+                username: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                role: 'Member',
+                membershipType: '',
+            },
+            card: {
+                cardNumber: '',
+                CCV: '',
+                expiryDate: '',
+                nameOnCard: ''
+            },
+            current: 0,
+            submitted: false
         }
+    },
+    computed: {
+        ...mapState('account', ['status'])
     },
     methods: {
         next () {
             this.current += 1;
+        },
+        ...mapActions('account', ['register']),
+        handleSubmit(e) {
+            this.submitted = true;
         }
     }
 };

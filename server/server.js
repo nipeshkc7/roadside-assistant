@@ -15,7 +15,8 @@ app.use(cors());
 app.use(jwt());
 
 // API routes
-app.use('/users', require('./users/users.controller'))
+app.use('/users', require('./users/users.controller'));
+app.use('/members', require('./members/members.controller'));
 
 // Error handler
 app.use(errorHandler);
