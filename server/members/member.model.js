@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
+const User = require('users/user.model');
 const Schema = mongoose.Schema;
 
-const memberSchema = new Schema({
-    memberID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    membershipType: { type: String, enum: ['subscription', 'per-service'], required: true },
+// Member schema inherits the attributes and options from the User Schema
+const memberSchema = User.discriminator('Member', new Schema({
+    membershipType: { type: String, enum: ['Subscription', 'Per-service'], required: true },
     expirationDate: { type: Date, default: null }
-});
+}));
 
-memberSchema.set('toJSON', { virtuals: true });
-
-// Exports member schema to mongodb
-module.exports = mongoose.model('Member', memberSchema);
+module.exports = mongoose.model('Member');

@@ -1,37 +1,29 @@
+<style>
+.wrapper-footer {
+    background: #212121;
+    color: #fff;
+    position: relative;
+}
+.alert-message {
+    margin-top: 20px;
+}
+</style>
+
 <template>
-    <div class="wrapper">
-        <div class="container">
-            <Row type="flex" justify="center" align="middle">
-                <Col span="6">
-                    <Alert v-if="alert.message" :type="`${alert.type}`" show-icon>{{alert.message}}</Alert>
-                </Col>
-            </Row>
+    <div>
+        <div class="wrapper">
             <router-view></router-view>
         </div>
+        <div class="wrapper-footer"></div>
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import Navigation from '@/components/Navigation';
 
 export default {
-    name: 'app',
-    computed: {
-        ...mapState({
-            alert: state => state.alert
-        })
-    },
-    methods: {
-        ...mapActions({
-            clearAlert: 'alert/clear'
-        }),
-    },
-    watch: {
-        $route (to, from) {
-            // When the route is changed the alert will be cleared
-            this.clearAlert();
-        }
-    }
+    name: 'app'
 };
 </script>
 

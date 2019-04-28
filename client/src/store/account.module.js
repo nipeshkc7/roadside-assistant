@@ -25,6 +25,7 @@ const actions = {
     logout({ commit }) {
         authenticationService.logout();
         commit('logout');
+        router.push('/login');
     },
     register({ dispatch, commit }, user) {
         commit('registerRequest', user);

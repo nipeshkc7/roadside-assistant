@@ -10,7 +10,7 @@ export const userService = {
 };
 
 function register(user) {
-    return fetch(`${config.apiUrl}/users`, requestOptions.post(user))
+    return fetch(`${config.apiUrl}/users/register`, requestOptions.post(user))
         .then(handleResponse);
 }
 

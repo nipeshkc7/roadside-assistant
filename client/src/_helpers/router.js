@@ -6,6 +6,8 @@ import RegisterPage from '@/views/RegisterPage';
 import HomePage from '@/views/HomePage';
 import LoginPage from '@/views/LoginPage';
 import AdminPage from '@/views/AdminPage';
+import MakeRequestPage from '@/views/MakeRequestPage';
+import RequestsPage from '@/views/RequestsPage';
 
 Vue.use(Router);
 
@@ -30,6 +32,16 @@ export const router = new Router({
             component: AdminPage,
             meta: { authorize: ['Admin'] }
         },
+        {
+            path: '/make-request',
+            component: MakeRequestPage,
+            meta: { authorize: ['Member'] }
+        },
+        {
+            path: '/requests',
+            component: RequestsPage,
+            meta: { authorize: ['Professional'] }
+        },
         
         // Else redirect to home page
         { path: '*', redirect: '/' }
@@ -39,7 +51,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // Redirect to login page if not logged in and trying to access a restricted page
     const { authorize } = to.meta;
-    const currentUser = authenticationService.currentUserValue;
+    const currentUser = authenticationService.currentUser;
 
     if (authorize) {
         if (!currentUser) {
@@ -48,7 +60,7 @@ router.beforeEach((to, from, next) => {
         }
 
         // check if route is restricted by role
-        if (authorize.length && !authorize.includes(currentUser.role)) {
+        if (authorize.length && !authorize.includes(currentUser.source.value.role)) {
             // role not authorised so redirect to home page
             return next({ path: '/' });
         }

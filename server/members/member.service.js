@@ -5,7 +5,6 @@ const Member = db.Member;
 module.exports = {
     getAll,
     getById,
-    create,
     update
 };
 
@@ -15,12 +14,6 @@ async function getAll() {
 
 async function getById(id) {
     return await Member.findById(id).populate('memberID');
-}
-
-async function create(id, memberParam) {
-    const member = new Member({ memberID: id }, memberParam);
-
-    await member.save();
 }
 
 async function update(id, memberParam) {
