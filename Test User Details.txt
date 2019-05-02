@@ -1,5 +1,2 @@
-username: testUser
-password: testUser
-
-username: testAdmin
-password: testAdmin
+username: Admin
+password: administrator
