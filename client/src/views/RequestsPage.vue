@@ -8,12 +8,12 @@
             <Row>
                 <Col span="4"><br></Col>
                 <Col span="16">
-                    <h1>View Requests In Your Area</h1>
-                    <ul v-if="requests.length">
-                        <li v-for="request in requests" :key="request.id">
-                            {{request.problemType}}
-                        </li>
-                    </ul>
+                    <h1>View Requests In Your Area (updated once every minute or upon page refresh)</h1>
+                    <Table border :columns="columns12" :data="requests" class="request-table">
+                        <template slot-scope="{ row, index }" slot="action">
+                            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">Accept</Button>
+                        </template>
+                    </Table>
                 </Col>
                 <Col span="4"><br></Col>
             </Row>
@@ -33,7 +33,23 @@ export default {
             location: {
                 lat: 0,
                 lon: 0
-            }
+            },
+            columns12: [
+                {
+                    title: 'Problem Type',
+                    key: 'problemType'
+                },
+                {
+                    title: 'Plate Number',
+                    key: 'plateNumber'
+                },
+                {
+                    title: 'Action',
+                    slot: 'action',
+                    width: 150,
+                    align: 'center'
+                }
+            ]
         }
     },
     components: {
@@ -55,6 +71,14 @@ export default {
             const lon = this.location.lon;
             requestService.getInArea(lat, lon).then(requests => this.requests = requests);
         }
+    },
+    // Updates location and requests in the area every minute
+    mounted: function () {
+        this.$nextTick(function () {
+            window.setInterval(() => {
+                this.getLocation();
+            },60000);
+        })
     }
 }
 </script>

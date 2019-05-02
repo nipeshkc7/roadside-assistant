@@ -94,7 +94,7 @@ export default {
                     label: 'Per-service'
                 },
                 {
-                    value: 'Subcription',
+                    value: 'Subscription',
                     label: 'Subscription'
                 }
             ],

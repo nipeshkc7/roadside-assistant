@@ -1,5 +1,6 @@
 const express = require('express');
-const userService = require('./user.service');
+const userService = require('./user.service'); // Operations available to all user types
+const memberService = require('../members/member.service'); // Operations available to Members specifically
 const authorize = require('_helpers/authorize');
 const router = express.Router();
 
@@ -10,7 +11,8 @@ router.get('/', authorize('Admin'), getAll); // Admin only route
 router.get('/current', authorize(), getCurrent);
 router.get('/:id', authorize(), getById);
 router.put('/:id', authorize(), update);
-router.delete('/:id', authorize('Admin'), _delete); // Admin
+router.delete('/:id', authorize('Admin'), _delete); // Admin only route
+router.put('/addCard/:id', authorize('Member'), addCard); // Member only route
 
 module.exports = router;
 
@@ -60,6 +62,12 @@ function update(req, res, next) {
 
 function _delete(req, res, next) {
     userService.delete(req.params.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function addCard(req, res, next) {
+    memberService.addCard(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

@@ -4,16 +4,13 @@ const Member = db.Member;
 
 module.exports = {
     getAll,
-    getById,
-    update
+    update,
+    addCard
 };
 
+// Gets all members info, minus their hash
 async function getAll() {
-    return await Member.find().populate('memberID');
-}
-
-async function getById(id) {
-    return await Member.findById(id).populate('memberID');
+    return await Member.find().select('-hash');
 }
 
 async function update(id, memberParam) {
@@ -23,4 +20,14 @@ async function update(id, memberParam) {
 
     Object.assign(member, memberParam);
     await member.save();
+}
+
+async function addCard(id, cardParam) {
+    // The '+creditCard' overwrites the no selection set for the creditCard in the member model and selects it
+    const member = await Member.findById(id).select('+creditCard');
+
+    if (!member) throw 'Member not found';
+
+    member.creditCard.push(cardParam);
+    console.log(member.creditCard[0]);
 }

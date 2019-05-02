@@ -40,7 +40,7 @@ function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
 }
 
 async function getInArea({ lat, lon }) {
-    const requests =  await Request.find().lean({ virtuals: true });
+    const requests =  await Request.find({completed: false}).lean({ virtuals: true });
     
     for (let index = 0; index < requests.length; index++) {
         const lat2 =  requests[index].latitude;

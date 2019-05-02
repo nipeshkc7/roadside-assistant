@@ -21,9 +21,15 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import Navigation from '@/components/Navigation';
+import socketIo from 'socket.io-client';
 
 export default {
-    name: 'app'
+    name: 'app',
+    created () {
+        const socket = socketIo('http://localhost:4000');
+
+        //socket.on('hello', (data) => console.log(data));
+    },
 };
 </script>
 

@@ -9,6 +9,10 @@ const reviewSchema = new Schema({
     timeStamp: { type: Date, default: Date.now }
 });
 
+/*const bankAccountSchema = new Schema({
+
+});*/
+
 const professionalSchema = User.discriminator('Professional', new Schema({
     available: { type: Boolean, default: false },
     reviews: [reviewSchema]
