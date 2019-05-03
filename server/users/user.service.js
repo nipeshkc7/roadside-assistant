@@ -39,9 +39,9 @@ async function getById(id) {
 }
 
 /* 
-Note: is able to create any user type: Admin, Member or Professional
-even though they have different fields, this is due to the 'role' field being 
-sent in the request which specifies which type the new user is :)
+    Note: is able to create any user type: Admin, Member or Professional
+    even though they have different fields, this is due to the 'role' field being 
+    sent in the request which specifies which type the new user is :)
  */
 async function create(userParam) {
     // Validate
@@ -58,7 +58,7 @@ async function create(userParam) {
     await user.save();
 }
 
-// Note: Not tested if works for all user types
+// Note: Tested and works with all user types :)
 async function update(id, userParam) {
     const user = await User.findById(id);
 

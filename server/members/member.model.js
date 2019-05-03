@@ -10,11 +10,11 @@ const cardSchema = new Schema({
     CVV: { type: Number, required: true }
 });
 
-// Member schema inherits the attributes and options from the User Schema
+// Member schema inherits the attributes and options from the User Schema (think inheritance)
 const memberSchema = User.discriminator('Member', new Schema({
     membershipType: { type: String, enum: ['Subscription', 'Per-service'], required: true },
     expirationDate: { type: Date, default: null },
-    creditCard: { type: [cardSchema], select: false } // Credit Card details are not fetched when a query is made unless explicitly said
+    creditCard: { type: [cardSchema], select: false } // Credit Card details are not fetched when a query is made unless explicitly stated
 }));
 
 module.exports = mongoose.model('Member');

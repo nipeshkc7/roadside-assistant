@@ -18,7 +18,6 @@ app.use(jwt());
 
 // API routes
 app.use('/users', require('./users/users.controller'));
-app.use('/members', require('./members/members.controller'));
 app.use('/requests', require('./requests/request.controller'));
 
 // Error handler
