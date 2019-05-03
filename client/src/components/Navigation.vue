@@ -4,6 +4,7 @@
     width: 100%;
     top: 0;
     right: 0;
+    height: auto;
 }
 .wrapper-header-nav {
     width: 95%;
@@ -18,7 +19,7 @@
 </style>
 
 <template>
-    <div class="wrapper-header">
+    <div>
         <Menu mode="horizontal" theme="light" :active-name="activeName">
             <div class="wrapper-header-nav">
                 <div class="wrapper-header-nav-list">

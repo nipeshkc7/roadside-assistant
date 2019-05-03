@@ -1,6 +1,7 @@
 const express = require('express');
 const userService = require('./user.service'); // Operations available to all user types
 const memberService = require('../members/member.service'); // Operations available to Members specifically
+const professionalService = require('../professionals/professional.service'); // Operations available to Professionals specifically
 const authorize = require('_helpers/authorize');
 const router = express.Router();
 
@@ -8,11 +9,12 @@ const router = express.Router();
 router.post('/authenticate', authenticate); // Public route
 router.post('/register', register); // Public route
 router.get('/', authorize('Admin'), getAll); // Admin only route
-router.get('/current', authorize(), getCurrent);
+router.get('/current', authorize(), getCurrent); // All registered users route
 router.get('/:id', authorize(), getById);
 router.put('/:id', authorize(), update);
 router.delete('/:id', authorize('Admin'), _delete); // Admin only route
-router.put('/addCard/:id', authorize('Member'), addCard); // Member only route
+router.put('/creditCard/:id', authorize('Member'), addCard); // Member only route
+router.put('/bankAccount/:id', authorize('Professional'), addBankAccount); // Professional only route
 
 module.exports = router;
 
@@ -68,6 +70,12 @@ function _delete(req, res, next) {
 
 function addCard(req, res, next) {
     memberService.addCard(req.params.id, req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function addBankAccount(req, res, next) {
+    professionalService.addBankAccount(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
