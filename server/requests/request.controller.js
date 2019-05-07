@@ -7,8 +7,15 @@ router.get('/', getAll);
 router.post('/get-in-area', getInArea);
 router.get('/:id', getById);
 router.get('/not-completed', getNotCompleted);
+router.post('/makeRequest', makeRequest);
 
 module.exports = router;
+
+function makeRequest(req, res, next) {
+    requestService.create(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
 
 function getAll(req, res, next) {
     requestService.getAll()

@@ -1,7 +1,4 @@
 <style>
-.content {
-    margin-top: 170px;
-}
 .user-table {
     margin: 10px;
 }

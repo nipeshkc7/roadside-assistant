@@ -12,6 +12,7 @@ const userSchema = new Schema({
     hash: { type: String, required: true }, // Hash is just the hashed value of the users password
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    room: { type: String, required: false },
     dateCreated: { type: Date, default: Date.now }
     }, userOptions
 );

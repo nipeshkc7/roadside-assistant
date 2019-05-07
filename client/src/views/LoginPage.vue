@@ -1,11 +1,11 @@
-<style>
-.login {
+<style scoped>
+.content {
     padding: 200px 0;
 }
 </style>
 
 <template>
-    <div class="login">
+    <div class="content">
         <Row type="flex" justify="center" align="middle">
             <Col span="6">
                 <Card :padding="30">

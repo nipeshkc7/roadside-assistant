@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .container {
     padding: 50px;
 }

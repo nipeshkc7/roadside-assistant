@@ -3,11 +3,12 @@ const mongooseLeanVirtuals = require('mongoose-lean-virtuals');
 const Schema = mongoose.Schema;
 
 const requestSchema = new Schema({
-    memberID: { type: mongoose.Schema.Types.ObjectId, ref: 'Member', required: true },
+    memberID: { type: mongoose.Schema.Types.ObjectId, required: true },
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
     problemType: { type: String, required: true },
     plateNumber: { type: String, required: true },
+    room: { type: String, required: true },
     completed: { type: Boolean, required: true, default: false }
 });
 

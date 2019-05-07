@@ -24,7 +24,7 @@ function getById(id) {
         .then(handleResponse);
 }
 
-function update(user) {
+function update(user, id) {
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions.put(user))
         .then(handleResponse);
 }

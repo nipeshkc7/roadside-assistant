@@ -2,11 +2,17 @@ import config from 'config';
 import { handleResponse, requestOptions } from '@/_helpers';
 
 export const requestService = {
+    create,
     getAll,
     getNotCompleted,
     getById,
     getInArea
 };
+
+function create(request) {
+    return fetch(`${config.apiUrl}/requests/makeRequest`, requestOptions.post(request))
+        .then(handleResponse);
+}
 
 function getAll() {
     return fetch(`${config.apiUrl}/requests`, requestOptions.get())

@@ -30,12 +30,19 @@ server.listen(port, function() {
     console.log('Server is listening on port ' + port);
 });
 
-/*const server = app.listen(port, function () {
-    console.log('Server is listening on port ' + port);
-});*/
-
 const io = socketIo(server);
 
-/*io.on('connection', (socket) => {
+io.on('connection', (socket) => { 
+    socket.on('room', function(room) {
+        socket.join(room);
+        console.log('A user has joined the ' + room);
 
-});*/
+        io.of('/').in('member').clients((error, clients) => {
+            if (error) throw error;
+            console.log(clients);
+        });
+    });
+
+    //socket.to('member').emit('connectToRoom', "You are in the member room");
+    //socket.to('professional').emit('connectToRoom', "You are in the professional room");
+})

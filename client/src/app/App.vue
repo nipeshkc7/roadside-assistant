@@ -1,4 +1,7 @@
 <style>
+body {
+    background-color: #fff;
+}
 .wrapper-footer {
     background: #212121;
     color: #fff;
@@ -6,6 +9,9 @@
 }
 .alert-message {
     margin-top: 20px;
+}
+.wrapper {
+    background: #eee;
 }
 </style>
 
@@ -21,14 +27,17 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import Navigation from '@/components/Navigation';
-import socketIo from 'socket.io-client';
+import io from 'socket.io-client';
 
 export default {
     name: 'app',
+    data () {
+        return {
+            socket: null
+        }
+    },
     created () {
-        const socket = socketIo('http://localhost:4000');
-
-        //socket.on('hello', (data) => console.log(data));
+        this.socket = io('http://localhost:4000');
     },
 };
 </script>
