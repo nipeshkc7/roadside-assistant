@@ -8,6 +8,7 @@ import LoginPage from '@/views/LoginPage';
 import AdminPage from '@/views/AdminPage';
 import MakeRequestPage from '@/views/MakeRequestPage';
 import RequestsPage from '@/views/RequestsPage';
+import UpdateUserDetailsPage from '@/views/UpdateUserDetailsPage';
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export const router = new Router({
             path: '/requests',
             component: RequestsPage,
             meta: { authorize: ['Professional'] }
+        },
+        {
+            path: '/update-details',
+            component: UpdateUserDetailsPage,
+            meta: { authorize:['Member'] }
         },
         
         // Else redirect to home page
