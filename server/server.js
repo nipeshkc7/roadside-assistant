@@ -31,6 +31,7 @@ server.listen(port, function() {
 });
 
 const io = socketIo(server);
+const userList = [];
 
 io.on('connection', (socket) => { 
     socket.on('room', function(room) {
@@ -41,6 +42,15 @@ io.on('connection', (socket) => {
             if (error) throw error;
             console.log(clients);
         });
+    });
+
+    socket.on('acceptRequest', (proParam) => {
+        userList.push(proParam);
+
+        let len = userList.length;
+        len--;
+
+        io.emit('userList', userList, proParam.username); 
     });
 
     //socket.to('member').emit('connectToRoom', "You are in the member room");

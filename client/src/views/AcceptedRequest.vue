@@ -22,9 +22,28 @@ import RequestSideNav from '@/components/RequestSidebar';
 import io from 'socket.io-client';
 
 export default {
+    data () {
+        return {
+            userList: [],
+            socket: null
+        }
+    },
     components: {
         'Navigation': Navigation,
         'RequestSide': RequestSideNav
     },
+    created () {
+        this.socket = this.$parent.socket;
+    },
+    mounted: function() {
+        this.socket.on('userList', (userList, username) => {
+            this.userList = userList;
+
+            this.$Notice.info({
+                title: username + ' has accepted your request!'
+            });
+        })
+    }
 }
+
 </script>

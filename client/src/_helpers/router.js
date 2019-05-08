@@ -9,6 +9,7 @@ import AdminPage from '@/views/AdminPage';
 import MakeRequestPage from '@/views/MakeRequestPage';
 import RequestsPage from '@/views/RequestsPage';
 import UpdateUserDetailsPage from '@/views/UpdateUserDetailsPage';
+import AcceptedRequest from '@/views/AcceptedRequest';
 
 Vue.use(Router);
 
@@ -36,6 +37,11 @@ export const router = new Router({
         {
             path: '/make-request',
             component: MakeRequestPage,
+            meta: { authorize: ['Member'] }
+        },
+        {
+            path: '/accepted-responders',
+            component: AcceptedRequest,
             meta: { authorize: ['Member'] }
         },
         {

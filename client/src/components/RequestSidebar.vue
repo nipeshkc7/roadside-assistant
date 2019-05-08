@@ -12,7 +12,7 @@
                     <MenuItem name="makeRequest" to="/make-request">
                     Make request
                     </MenuItem>
-                    <MenuItem name="viewAccepted" to="/">
+                    <MenuItem name="viewAccepted" to="/accepted-responders">
                     View accepted
                     </MenuItem>
                 </Menu>

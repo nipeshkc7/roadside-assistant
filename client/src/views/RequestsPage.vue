@@ -92,9 +92,18 @@ export default {
                     })
                 },
                 onOk: () => {
+                    const sendParam = {
+                        id: authenticationService.currentUserValue._id,
+                        username: authenticationService.currentUserValue.username,
+                        firstName: authenticationService.currentUserValue.firstName,
+                        lastName: authenticationService.currentUserValue.lastName,
+                        reviews: authenticationService.currentUserValue.reviews,
+                        quote: this.quotePrice
+                    };
                     const roomId = this.requests[index].room;
                     userService.update({room: roomId}, authenticationService.currentUserValue._id);
                     this.socket.emit('room', roomId);
+                    this.socket.emit('acceptRequest', sendParam);
                 }
             })
         }
