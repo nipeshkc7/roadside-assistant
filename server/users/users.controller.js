@@ -68,13 +68,13 @@ function _delete(req, res, next) {
         .catch(err => next(err));
 }
 
-function addCard(req, res, next) {
+function addCard(req, res, next) {//or updates
     memberService.addCard(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
 
-function addBankAccount(req, res, next) {
+function addBankAccount(req, res, next) {//or updates
     professionalService.addBankAccount(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
