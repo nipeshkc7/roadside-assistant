@@ -3,7 +3,8 @@ const User = require('users/user.model');
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
-    memberID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    memberID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    username: { type: String, required: true },
     rating: { type: Number, min: 0, max: 5, required: true },
     comment: { type: String },
     timeStamp: { type: Date, default: Date.now }

@@ -1,4 +1,5 @@
 import { requestService, userService } from '../_services';
+import { router } from '../_helpers';
 
 const state = {
     request: null,
@@ -22,6 +23,7 @@ const actions = {
             .then(
                 request => {
                     commit('createSuccess', request);
+                    router.push('/accepted-responders');
                 },
                 error => {
                     commit('createFailure', error);

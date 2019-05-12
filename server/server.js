@@ -47,9 +47,9 @@ io.on('connection', (socket) => {
         activeUsers.set(username, socketID);
 
         // Print to console all of the connected users
-        for (const [k, v] of activeUsers) {
+        /*for (const [k, v] of activeUsers) {
             console.log(k, v);
-        }
+        }*/
     });
 
     socket.on('acceptRequest', (proParam, roomID) => {

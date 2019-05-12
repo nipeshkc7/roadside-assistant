@@ -1,9 +1,12 @@
-<style>
+<style scoped>
 .acceptedUsers {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px 25px;
+}
+li {
+    list-style: none;
 }
 </style>
 
@@ -14,6 +17,29 @@
             <Row>
                 <RequestSide activeName="viewAccepted"></RequestSide>
                 <Col span="16" class="acceptedUsers">
+                    <div v-if="userList.length">
+                        <div v-for="user in userList" :key="user.professionalID">
+                            <Card style="width:600px">
+                                <p slot="title">
+                                    {{user.username}}
+                                </p>
+                                <p><strong>Name:</strong> {{user.firstName + " " + user.lastName}}</p>
+                                <p v-if="user.quote"><strong>Quote for service:</strong> ${{user.quote}}</p>
+                                <Divider orientation="left">Reviews</Divider>
+                                <ul v-if="user.reviews.length">
+                                    <li v-for="item in user.reviews" :key="item.memberID">
+                                        <Card>
+                                            <p slot="title">
+                                                {{item.username}}
+                                            </p>
+                                            <Rate disabled slot="extra" v-model="item.rating" />
+                                            <p>{{item.comment}}</p>
+                                        </Card>
+                                    </li>
+                                </ul>
+                            </Card>
+                        </div>
+                    </div>
                 </Col>
                 <Col span="4"></Col>
             </Row>
@@ -26,7 +52,6 @@ import { mapState, mapActions } from 'vuex';
 import Navigation from '@/components/Navigation';
 import RequestSideNav from '@/components/RequestSidebar';
 import { requestService, authenticationService } from '@/_services';
-import io from 'socket.io-client';
 
 export default {
     data () {
@@ -58,7 +83,7 @@ export default {
         })
     },
     mounted: function() {
-        this.socket.on('userList', (username) => {
+        this.socket.on('activeUsers', (username) => {
             this.getRequest(this.$store.state.requests.request[0]._id);
 
             requestService.getResponders(this.$store.state.requests.request[0]._id).then(responders => this.userList = responders);
