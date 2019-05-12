@@ -73,7 +73,6 @@ export default {
                 if (valid) {
                     const { username, password } = this.loginForm;
                     if (username && password) {
-                        this.socket.emit('login', username, this.socket.id);
                         this.login({ username, password });
                     }
                 } else {

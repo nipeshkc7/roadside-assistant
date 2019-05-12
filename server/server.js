@@ -31,26 +31,28 @@ server.listen(port, function() {
 });
 
 const io = socketIo(server);
-const userList = [];
 
-io.on('connection', (socket) => { 
+// Map of active (online) users
+const activeUsers = new Map();
+
+io.on('connection', (socket) => {
+    
+    // User joins a room when they accept a request or make a request, this is so realtime data can be sent between the members and professionals
     socket.on('room', (room) => {
         socket.join(room);
     });
 
-    socket.on('login', (username, socketID) => {
-        userList.push({username: username, socketID: socketID});
-        console.log(userList);
+    // When a user connects to the website add their username and their socketID to the activeUsers map (socketID is kept updated over page refreshes)
+    socket.on('userConnected', (username, socketID) => {
+        activeUsers.set(username, socketID);
+
+        // Print to console all of the connected users
+        for (const [k, v] of activeUsers) {
+            console.log(k, v);
+        }
     });
 
     socket.on('acceptRequest', (proParam, roomID) => {
-        userList.push(proParam);
-
-        let len = userList.length;
-        len--;
-        io.to(roomID).emit('userList', proParam.username); 
+        io.to(roomID).emit('activeUsers', proParam.username); 
     });
-
-    //socket.to('member').emit('connectToRoom', "You are in the member room");
-    //socket.to('professional').emit('connectToRoom', "You are in the professional room");
 })
