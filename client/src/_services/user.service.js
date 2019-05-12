@@ -6,6 +6,7 @@ export const userService = {
     getAll,
     getById,
     update,
+    getMembershipType,
     delete: _delete
 };
 
@@ -26,6 +27,11 @@ function getById(id) {
 
 function update(user, id) {
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions.put(user))
+        .then(handleResponse);
+}
+
+function getMembershipType(id) {
+    return fetch(`${config.apiUrl}/users/getMemberType/${id}`, requestOptions.get())
         .then(handleResponse);
 }
 

@@ -28,6 +28,12 @@ p {
                             <FormItem label="Plate number" prop="plateNumber">
                                 <Input type="text" v-model="requestForm.plateNumber" placeholder="Enter your number plate" name="plateNumber"></Input>
                             </FormItem>
+                            <FormItem label="Vehicle model" prop="model">
+                                <Input type="text" v-model="requestForm.model" placeholder="Enter your vehicles model type" name="model"></Input>
+                            </FormItem>
+                            <FormItem label="Vehicle colour" prop="colour">
+                                <Input type="text" v-model="requestForm.colour" placeholder="Enter the colour of your vehicle" name="colour"></Input>
+                            </FormItem>
                             <FormItem>
                                 <Button type="primary" @click="onSubmit('requestForm')">Make Request</Button>
                             </FormItem>
@@ -54,6 +60,8 @@ export default {
                 longitude: 0,
                 problemType: '',
                 plateNumber: '',
+                model: null,
+                colour: null,
                 room: ''
             }
         }
@@ -62,11 +70,15 @@ export default {
         'Navigation': Navigation,
         'RequestSide': RequestSideNav
     },
+    computed: {
+        ...mapState('requests', ['request'])
+    },
     created () {
         this.getLocation();
         this.requestForm.memberID = this.$store.state.account.user._id;
     },
     methods: {
+        ...mapActions('requests', ['createRequest']),
         getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(this.setPosition);
@@ -76,7 +88,6 @@ export default {
             this.requestForm.latitude = position.coords.latitude;
             this.requestForm.longitude = position.coords.longitude;
         },
-        ...mapActions('requests', ['createRequest']),
         onSubmit(name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {

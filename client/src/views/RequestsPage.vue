@@ -76,36 +76,63 @@ export default {
             requestService.getInArea(lat, lon).then(requests => this.requests = requests);
         },
         accept(index) {
-            this.$Modal.confirm({
-                render: (h) => {
-                    return h('Input', {
-                        props: {
-                            value: this.quotePrice,
-                            autofocus: true,
-                            placeholder: 'Please a quote for you to answer this service request...'
+            userService.getMembershipType(this.requests[index].memberID).then(membershipType => {
+                const membershipTypee = membershipType;
+                let quotePrice = null;
+                
+                if (membershipType == "Per-service") {
+                    this.$Modal.confirm({
+                        render: (h) => {
+                            return h('Input', {
+                                props: {
+                                    value: quotePrice,
+                                    autofocus: true,
+                                    placeholder: 'Please a quote for you to answer this service request...'
+                                },
+                                on: {
+                                    input: (val) => {
+                                        quotePrice = parseFloat(val);
+                                    }
+                                }
+                            })
                         },
-                        on: {
-                            input: (val) => {
-                                this.quotePrice = parseFloat(val);
+                        onOk: () => {
+                            const responder = {
+                                responderID: authenticationService.currentUserValue._id,
+                                quote: quotePrice
+                            };
+                            const sendParam = {
+                                username: authenticationService.currentUserValue.username
                             }
+                            const roomId = this.requests[index].room;
+                            userService.update({room: roomId}, authenticationService.currentUserValue._id);
+                            requestService.update(responder, this.requests[index]._id);
+                            this.socket.emit('room', roomId);
+                            this.socket.emit('acceptRequest', sendParam, roomId);
+                            this.$Message.info('Service request accepted');
                         }
                     })
-                },
-                onOk: () => {
-                    const sendParam = {
-                        id: authenticationService.currentUserValue._id,
-                        username: authenticationService.currentUserValue.username,
-                        firstName: authenticationService.currentUserValue.firstName,
-                        lastName: authenticationService.currentUserValue.lastName,
-                        reviews: authenticationService.currentUserValue.reviews,
-                        quote: this.quotePrice
-                    };
-                    const roomId = this.requests[index].room;
-                    userService.update({room: roomId}, authenticationService.currentUserValue._id);
-                    this.socket.emit('room', roomId);
-                    this.socket.emit('acceptRequest', sendParam);
+                } else if(membershipType == "Subscription") {
+                    this.$Modal.confirm({
+                        title: 'Accept Service Request',
+                        content: '<p>Are you sure you want to accept this service request?</p>',
+                        onOk: () => {
+                            const responder = {
+                                responderID: authenticationService.currentUserValue._id,
+                            };
+                            const sendParam = {
+                                username: authenticationService.currentUserValue.username
+                            }
+                            const roomId = this.requests[index].room;
+                            userService.update({room: roomId}, authenticationService.currentUserValue._id);
+                            requestService.update(responder, this.requests[index]._id);
+                            this.socket.emit('room', roomId);
+                            this.socket.emit('acceptRequest', sendParam, roomId);
+                            this.$Message.info('Service request accepted');
+                        }
+                    });
                 }
-            })
+            });
         }
     },
     // Updates location and requests in the area every minute

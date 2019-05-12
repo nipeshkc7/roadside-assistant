@@ -34,23 +34,21 @@ const io = socketIo(server);
 const userList = [];
 
 io.on('connection', (socket) => { 
-    socket.on('room', function(room) {
+    socket.on('room', (room) => {
         socket.join(room);
-        console.log('A user has joined the ' + room);
-
-        io.of('/').in('member').clients((error, clients) => {
-            if (error) throw error;
-            console.log(clients);
-        });
     });
 
-    socket.on('acceptRequest', (proParam) => {
+    socket.on('login', (username, socketID) => {
+        userList.push({username: username, socketID: socketID});
+        console.log(userList);
+    });
+
+    socket.on('acceptRequest', (proParam, roomID) => {
         userList.push(proParam);
 
         let len = userList.length;
         len--;
-
-        io.emit('userList', userList, proParam.username); 
+        io.to(roomID).emit('userList', proParam.username); 
     });
 
     //socket.to('member').emit('connectToRoom', "You are in the member room");

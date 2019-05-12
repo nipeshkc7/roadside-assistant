@@ -26,6 +26,7 @@ body {
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import { userService } from '@/_services';
 import Navigation from '@/components/Navigation';
 import io from 'socket.io-client';
 

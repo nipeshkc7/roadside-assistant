@@ -5,12 +5,22 @@ const Member = db.Member;
 module.exports = {
     getAll,
     update,
-    addCard
+    addCard,
+    getMembershipType
 };
 
 // Gets all members info, minus their hash
 async function getAll() {
     return await Member.find().select('-hash');
+}
+
+async function getMembershipType(id) {
+    const member = await Member.findById(id);
+
+    if (!member) throw 'Member not found';
+
+    const membershipType = member.membershipType;
+    return membershipType;
 }
 
 async function update(id, memberParam) {

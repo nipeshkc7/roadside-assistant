@@ -8,7 +8,10 @@ const requestSchema = new Schema({
     longitude: { type: Number, required: true },
     problemType: { type: String, required: true },
     plateNumber: { type: String, required: true },
+    model: { type: String, required: true },
+    colour: { type: String, required: true },
     room: { type: String, required: true },
+    responders: { type: Array, required: false, default: [] },
     completed: { type: Boolean, required: true, default: false }
 });
 

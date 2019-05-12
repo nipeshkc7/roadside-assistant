@@ -1,16 +1,39 @@
 const db = require('_helpers/db');
 const Request = db.Request;
+const Professional = db.Professional;
 
 module.exports = {
     create,
+    update,
     getAll,
     getById,
     getAllNotCompleted,
-    getInArea
+    getInArea,
+    getRequestResponders,
+    getMembersRequests
 }
 
 async function create(requestParam) {
+    // Validate that a member cannot make another request without completing their first one
+    if (await Request.findOne({ memberID: requestParam.memberID, completed: false })) {
+        throw 'This member already has a service request in progress';
+    }
+
     const request = new Request(requestParam);
+
+    await request.save();
+    return request.toObject();
+}
+
+async function update(id, requestParam) {
+    const request = await Request.findById(id).select('+responders');
+
+    if (!request) throw 'Request not found';
+
+    if (requestParam.responderID) {
+        request.responders.push(requestParam);
+    }
+    Object.assign(request, requestParam);
 
     await request.save();
 }
@@ -62,6 +85,39 @@ async function getInArea({ lat, lon }) {
         }
     }
 
-    //console.log(requests);
     return requests;
+}
+
+async function getMembersRequests(memberIDD) {
+    const requests = await Request.find({completed: false, memberID: memberIDD});
+    return requests;
+}
+
+async function getRequestResponders(id) {
+    const request = await Request.findById(id).lean({ virtuals: true });
+    
+    const responder = {
+        professionalID: null,
+        username: null,
+        firstName: null,
+        lastName: null,
+        quote: null,
+        reviews: []
+    };
+    const responderss = request.responders;
+    var responders = [];
+
+    for (let index = 0; index < responderss.length; index++) {
+        professional = await Professional.findById(responderss[index].responderID);
+        responder.professionalID = professional._id;
+        responder.username = professional.username;
+        responder.firstName = professional.firstName;
+        responder.lastName = professional.lastName;
+        responder.quote = responderss[index].quote;
+        responder.reviews = professional.reviews;
+
+        responders.push(responder);
+    }
+
+    return responders;
 }

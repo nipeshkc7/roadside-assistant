@@ -63,7 +63,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // Redirect to login page if not logged in and trying to access a restricted page
     const { authorize } = to.meta;
-    const currentUser = authenticationService.currentUser;
+    const currentUser = authenticationService.currentUserValue;
 
     if (authorize) {
         if (!currentUser) {
@@ -72,7 +72,7 @@ router.beforeEach((to, from, next) => {
         }
 
         // check if route is restricted by role
-        if (authorize.length && !authorize.includes(currentUser.source.value.role)) {
+        if (authorize.length && !authorize.includes(currentUser.role)) {
             // role not authorised so redirect to home page
             return next({ path: '/' });
         }

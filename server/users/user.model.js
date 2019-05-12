@@ -13,6 +13,7 @@ const userSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     room: { type: String, required: false },
+    socketID: { type: String, required: false },
     dateCreated: { type: Date, default: Date.now }
     }, userOptions
 );

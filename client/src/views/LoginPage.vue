@@ -52,7 +52,8 @@ export default {
                     { required: true, message: 'Password is required.', trigger: 'blur' },
                     { type: 'string', min: 6, message: 'The password length cannot be less than 6 characters', trigger: 'blur' }
                 ]
-            }
+            },
+            socket: null
         }
     },
     computed: {
@@ -60,6 +61,7 @@ export default {
     },
     created () {
         this.logout();
+        this.socket = this.$parent.socket;
     },
     methods: {
         ...mapActions('account', ['login', 'logout']),
@@ -71,6 +73,7 @@ export default {
                 if (valid) {
                     const { username, password } = this.loginForm;
                     if (username && password) {
+                        this.socket.emit('login', username, this.socket.id);
                         this.login({ username, password });
                     }
                 } else {
