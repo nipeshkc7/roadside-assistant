@@ -1,14 +1,13 @@
 import Vue from 'vue';
+import App from './app/App';
 import Vuelidate from 'vuelidate';
-import iView from 'iview';
-import locale from 'iview/dist/locale/en-US';
-
 import { store } from './store';
 import { router } from './_helpers';
-import App from './app/App';
+import './plugins/iview.js'
+
+Vue.config.productionTip = false
 
 Vue.use(Vuelidate);
-Vue.use(iView, { locale });
 
 new Vue({
     el: '#app',

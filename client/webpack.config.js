@@ -8,9 +8,11 @@ module.exports = {
         extensions: ['.js', '.vue'],
         alias: {
             '@': path.resolve(__dirname, 'src/'),
+            vue$: 'vue/dist/vue.runtime.esm.js'
         }
     },
     module: {
+        noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
         rules: [
             {
                 test: /\.vue?$/,
@@ -21,6 +23,28 @@ module.exports = {
                 test: /\.js?$/,
                 exclude: /(node_modules)/,
                 loader: 'babel-loader'
+            },
+            {
+                test: /\.(svg)(\?.*)?$/,
+                use: [
+                    {
+                        loader: 'file-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 4096,
+                            fallback: {
+                                loader: 'file-loader'
+                            }
+                        }
+                    }
+                ]
             },
             {
                 test: /\.css$/,
