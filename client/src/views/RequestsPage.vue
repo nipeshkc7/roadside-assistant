@@ -25,6 +25,7 @@
 import { mapState, mapActions } from 'vuex';
 import { requestService } from '@/_services';
 import { userService, authenticationService } from '@/_services';
+import { router } from '../_helpers';
 import Navigation from '@/components/Navigation';
 
 export default {
@@ -109,6 +110,7 @@ export default {
                             requestService.update(responder, this.requests[index]._id);
                             this.socket.emit('room', roomId);
                             this.socket.emit('acceptRequest', sendParam, roomId);
+                            //this.$store.state.requests.request = this.requests[index];
                             this.$Message.info('Service request accepted');
                         }
                     })
@@ -128,6 +130,7 @@ export default {
                             requestService.update(responder, this.requests[index]._id);
                             this.socket.emit('room', roomId);
                             this.socket.emit('acceptRequest', sendParam, roomId);
+                            //this.$store.state.requests.request = this.requests[index];
                             this.$Message.info('Service request accepted');
                         }
                     });
@@ -135,12 +138,21 @@ export default {
             });
         }
     },
-    // Updates location and requests in the area every minute
     mounted: function () {
+        // Updates location and requests in the area every minute
         this.$nextTick(function () {
             window.setInterval(() => {
                 this.getLocation();
             },60000);
+        }),
+        // If the member accepts this professionals response to their sevice request, notify the professional
+        this.socket.on('serviceAccepted', (requestID) => {
+            router.push({
+                name: 'current-request',
+                params: {
+                    requestId: requestID
+                }
+            });
         })
     }
 }

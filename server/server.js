@@ -38,6 +38,7 @@ const activeUsers = new Map();
 io.on('connection', (socket) => {
     
     // User joins a room when they accept a request or make a request, this is so realtime data can be sent between the members and professionals
+    // TODO: Possibly can get rid of this since we are keeping a map of each user and their socketid
     socket.on('room', (room) => {
         socket.join(room);
     });
@@ -45,6 +46,7 @@ io.on('connection', (socket) => {
     // When a user connects to the website add their username and their socketID to the activeUsers map (socketID is kept updated over page refreshes)
     socket.on('userConnected', (username, socketID) => {
         activeUsers.set(username, socketID);
+        console.log(username + ' ' + socketID);
 
         // Print to console all of the connected users
         /*for (const [k, v] of activeUsers) {
@@ -52,7 +54,16 @@ io.on('connection', (socket) => {
         }*/
     });
 
+    // TODO: Instead of io.to(room), this could just be emitted to the member who requested the service *MAYBE*
     socket.on('acceptRequest', (proParam, roomID) => {
         io.to(roomID).emit('activeUsers', proParam.username); 
+    });
+
+    // When a member selects which professional they want to respond to their request, retrieve their socketID from the map
+    // and notify them of the acceptance
+    // TODO: Notify other professionals that their response has be rejected
+    socket.on('chooseProfessional', (username, requestID) => {
+        //activeUsers.get(username);
+        io.to(`${activeUsers.get(username)}`).emit('serviceAccepted', requestID);
     });
 })

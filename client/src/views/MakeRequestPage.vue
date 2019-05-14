@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 p {
     font-size: 12px;
     padding: 0 0 10px 0;

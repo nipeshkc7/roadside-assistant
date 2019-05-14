@@ -12,7 +12,7 @@ const requestSchema = new Schema({
     colour: { type: String, required: true },
     room: { type: String, required: true },
     responders: { type: Array, required: false, default: [] },
-    completed: { type: Boolean, required: true, default: false }
+    status: { type: String, enum: ['available', 'in-progress', 'completed'], required: true, default: 'available' }
 });
 
 requestSchema.set('toJSON', { virtuals: true });

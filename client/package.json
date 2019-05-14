@@ -7,6 +7,8 @@
   },
   "dependencies": {
     "iview": "^3.4.1",
+    "leaflet": "^1.5.1",
+    "leaflet-routing-machine": "^3.2.12",
     "mongodb": "^3.2.4",
     "mongoose": "^5.5.7",
     "rxjs": "^6.5.2",

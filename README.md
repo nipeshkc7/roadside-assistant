@@ -15,7 +15,8 @@
 - [ ] Add get credit card details function to the back-end.
 - [ ] Add get bank account details function to the back-end.
 - [ ] Add confirm modal for deleting a user on the admin page. 
-- [ ] Create a page for the map with directions to be displayed on.
+- [x] ~~Create a page for the map with directions to be displayed on.~~
+- [ ] Change the request model in the database, change the completed field to status with type enum ('available', 'in-progress', 'completed')
 - [ ] Add a request completion button to the map page for professionals to confirm when a service request has been completed.
 
 ## Todo List: Arpan

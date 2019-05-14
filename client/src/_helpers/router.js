@@ -52,7 +52,17 @@ export const router = new Router({
         {
             path: '/update-details',
             component: UpdateUserDetailsPage,
-            meta: { authorize:['Member'] }
+            meta: { authorize: ['Member'] }
+        },
+        {
+            path: '/current-request',
+            name: 'current-request',
+            meta: { authorize: ['Professional'] },
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: () => import('@/views/CurrentRequestPage'),
+            props: true
         },
         
         // Else redirect to home page

@@ -15,7 +15,8 @@ module.exports = {
 
 async function create(requestParam) {
     // Validate that a member cannot make another request without completing their first one
-    if (await Request.findOne({ memberID: requestParam.memberID, completed: false })) {
+    if (await Request.findOne().or([{ memberID: requestParam.memberID, status: 'available' }, { memberID: requestParam.memberID, status: 'in-progress' }])) {
+        console.log('already has a requessst');
         throw 'This member already has a service request in progress';
     }
 
@@ -47,7 +48,7 @@ async function getById(id) {
 }
 
 async function getAllNotCompleted() {
-    return await Request.find({completed: false});
+    return await Request.find({status: 'available'});
 }
 
 // Converts the latitude or longitudes value to radians
@@ -73,7 +74,7 @@ function distanceInKmBetweenCoords(lat1, lon1, lat2, lon2) {
 
 // Returns all requests within a 10km radius of the professional
 async function getInArea({ lat, lon }) {
-    const requests =  await Request.find({completed: false}).lean({ virtuals: true });
+    const requests =  await Request.find({status: 'available'}).lean({ virtuals: true });
     
     for (let index = 0; index < requests.length; index++) {
         const lat2 =  requests[index].latitude;
@@ -89,7 +90,7 @@ async function getInArea({ lat, lon }) {
 }
 
 async function getMembersRequests(memberIDD) {
-    const requests = await Request.find({completed: false, memberID: memberIDD});
+    const requests = await Request.find({status: 'available', memberID: memberIDD});
     return requests;
 }
 
