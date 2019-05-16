@@ -23,14 +23,14 @@
 
 - [ ] Add a sidebar to the UpdateUserDetailsPage.vue (look at the MakeRequestPage.vue for an example)
 
-- [ ] Set the initial page as the UpdateUserPage.vue
+- [x] ~~Set the initial page as the UpdateUserPage.vue (for members only)~~
 
 - [ ] Add a sidebar to the UpdateUserDetailsPage.vue (look at the MakeRequestPage.vue for an example)
 
-- [ ] Add a menu item for add/update bank account details page (should only be visible to professionals)
+- [x] ~~Add a menu item for add/update bank account details page (should only be visible to professionals)~~
 
-- [ ] Add a menu item for add/update credit card details page (should only be visible to members)
+- [x] ~~Add a menu item for add/update credit card details page (should only be visible to members)~~
 
-- [ ] Add add/update bank account details page to the front-end for professionals.
+- [x] ~~Add add/update bank account details page to the front-end for professionals.~~
 
-- [ ] Add add/update credit card details page to the front-end for members.
+- [x] ~~Add add/update credit card details page to the front-end for members.~~
