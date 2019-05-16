@@ -16,21 +16,20 @@
 - [ ] Add get bank account details function to the back-end.
 - [ ] Add confirm modal for deleting a user on the admin page. 
 - [x] ~~Create a page for the map with directions to be displayed on.~~
-- [ ] Change the request model in the database, change the completed field to status with type enum ('available', 'in-progress', 'completed')
+- [x] ~~Have map page load directions on page load.~~
+- [x] Change the request model in the database, change the completed field to status with type enum ('available', 'in-progress', 'completed')
 - [ ] Add a request completion button to the map page for professionals to confirm when a service request has been completed.
 
 ## Todo List: Arpan
 
-- [ ] Add a sidebar to the UpdateUserDetailsPage.vue (look at the MakeRequestPage.vue for an example)
+- [ ] Add a sidebar to the UpdateUserDetailsPage.vue (look at the MakeRequestPage.vue for an example, basically like the RequestSidebar.vue but for updating account details)
 
-- [ ] Set the initial page as the UpdateUserPage.vue
+- [ ] Set the initial page as the UpdateUserPage.vue (for the sidebar mentioned above)
 
-- [ ] Add a sidebar to the UpdateUserDetailsPage.vue (look at the MakeRequestPage.vue for an example)
+- [ ] Add a menu item for add/update bank account details page for the sidebar mentioned above (should only be visible to professionals)
 
-- [ ] Add a menu item for add/update bank account details page (should only be visible to professionals)
+- [ ] Add a menu item for add/update credit card details page for the sidebar mentioned above (should only be visible to members)
 
-- [ ] Add a menu item for add/update credit card details page (should only be visible to members)
+- [x] Add add/update bank account details page to the front-end for professionals.
 
-- [ ] Add add/update bank account details page to the front-end for professionals.
-
-- [ ] Add add/update credit card details page to the front-end for members.
+- [x] Add add/update credit card details page to the front-end for members.
