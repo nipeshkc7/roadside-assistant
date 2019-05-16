@@ -31,10 +31,13 @@ const actions = {
                 }
             );
     },
-    updateRequest({commit}, request, id) {
+    updateRequest({commit}, request) {
         commit('updateRequest');
 
-        requestService.update(request, id)
+        const req = {
+            status: request.status
+        }
+        requestService.update(req, request.id)
             .then(
                 request => commit('updateSuccess', request)
             );
@@ -85,7 +88,7 @@ const mutations = {
         state.all = { updating: true };
     },
     updateSuccess(state, request) {
-        state.all = { request: request };
+        state.request = request;
     },
     getRequestById(state) {
         state.all = { getting: true };
