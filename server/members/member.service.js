@@ -6,7 +6,8 @@ module.exports = {
     getAll,
     update,
     addCard,
-    getMembershipType
+    getMembershipType,
+    getCreditCardDetails
 };
 
 // Gets all members info, minus their hash
@@ -47,4 +48,14 @@ async function addCard(id, cardParam) {
     }
     //console.log(member.creditCard[0]);
     await member.save();
+}
+
+async function getCreditCardDetails(id) {
+    const member = await Member.findById(id).select('+creditCard');
+
+    if (!member) throw 'Member not found';
+    
+    const cardDetails = member.creditCard;
+
+    return cardDetails;
 }
