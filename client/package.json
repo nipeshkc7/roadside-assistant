@@ -6,6 +6,7 @@
     "start": "webpack-dev-server --open"
   },
   "dependencies": {
+    "dayjs": "^1.8.14",
     "iview": "^3.4.1",
     "leaflet": "^1.5.1",
     "leaflet-routing-machine": "^3.2.12",

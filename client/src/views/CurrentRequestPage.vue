@@ -4,16 +4,34 @@
   width: 1200px;
   height: 800px;
 }
+.mapSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 25px;
+}
 </style>
 
-// TODO: Display the requests details on the left side of the page (problem type, number plate, make, model, colour)
-// TODO: Add navbar
+// TODO: Display the requests details on the left side of the page (problem type, number plate, model, colour)
 // TODO: Add button to complete service request and create a transaction record for both the professional and the member
 <template>
     <div>
-        <p>{{requestId}}</p>
-        <br><br>
-        <div id="map" class="map"></div>
+        <Navigation activeName="Requests"></Navigation>
+        <div class="content">
+            <Row>
+                <Col span="4">
+                    <p>Problem type: </p>
+                    <p>Plate number: </p>
+                    <p>Model: </p>
+                    <p>Colour: </p>
+                </Col>
+                <Col span="16" class="mapSection">
+                    <div id="map" class="map"></div>
+                    <Button>Complete Request</Button>
+                </Col>
+                <Col span="4"></Col>
+            </Row>
+        </div>
     </div>
 </template>
 

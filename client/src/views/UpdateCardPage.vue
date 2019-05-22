@@ -30,7 +30,7 @@
                                     <Input type="number" v-model="cardDets.cardNumber" placeholder="Card Number" name="cardNumber" ></Input>
                                 </FormItem>
                                 <FormItem label="Expiry date" prop="expDate">
-                                    <Input type="date" v-model="cardDets.expDate" placeholder="Enter the expiry date" name="expDate" ></Input>
+                                    <DatePicker v-model="cardDets.expDate" type="month" format="MM/yy" placeholder="Select expiration date" name="expDate" style="width: 100%"></DatePicker>
                                 </FormItem>
                                 <FormItem label="CVV" prop="CVV">
                                     <Input type="text" v-model="cardDets.CVV" placeholder="Enter your CVV" name="CVV" ></Input>

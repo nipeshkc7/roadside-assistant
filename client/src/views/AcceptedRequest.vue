@@ -25,6 +25,7 @@ li {
                                 </p>
                                 <p><strong>Name:</strong> {{user.firstName + " " + user.lastName}}</p>
                                 <p v-if="user.quote"><strong>Quote for service:</strong> ${{user.quote}}</p>
+                                <br>
                                 <Button @click="selectPro(user.username)">Select this professional</Button>
                                 <Divider orientation="left">Reviews</Divider>
                                 <ul v-if="user.reviews.length">

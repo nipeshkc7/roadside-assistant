@@ -78,7 +78,7 @@ export default {
         },
         //* Generalized this method to reduce code, since the only difference was the responder objects fields
         okMethod(index, memberType) {
-            const responder = null;
+            var responder = null;
 
             if (memberType === 'Per-service') {
                 responder = {

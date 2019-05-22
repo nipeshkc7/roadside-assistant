@@ -9,6 +9,8 @@ export const userService = {
     getMembershipType,
     updateBank,
     updateCard,
+    getCardDetails,
+    getBankDetails,
     delete: _delete
 };
 
@@ -44,6 +46,16 @@ function updateBank(request, id) {
 
 function updateCard(request, id) {
     return fetch(`${config.apiUrl}/users/creditCard/${id}`, requestOptions.put(request))
+        .then(handleResponse);
+}
+
+function getCardDetails(id) {
+    return fetch(`${config.apiUrl}/users/creditCard/${id}`, requestOptions.get())
+        .then(handleResponse);
+}
+
+function getBankDetails(id) {
+    return fetch(`${config.apiUrl}/users/bankAccount/${id}`, requestOptions.get())
         .then(handleResponse);
 }
 

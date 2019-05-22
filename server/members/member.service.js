@@ -55,7 +55,7 @@ async function getCreditCardDetails(id) {
 
     if (!member) throw 'Member not found';
     
-    const cardDetails = member.creditCard;
+    const cardDetails = member.creditCard[0];
 
     return cardDetails;
 }

@@ -17,6 +17,8 @@ router.put('/creditCard/:id', authorize('Member'), addCard); // Member only rout
 router.put('/bankAccount/:id', authorize('Professional'), addBankAccount); // Professional only route
 router.get('/getMemberType/:id', authorize(), getMembershipType);
 router.post('/:id/addReview', authorize('Member'), addReview);
+router.get('/creditCard/:id', authorize(), getCreditCardDetails);
+router.get('/bankAccount/:id', authorize(), getBankDetails);
 
 module.exports = router;
 
@@ -91,5 +93,17 @@ function getMembershipType(req, res, next) {
 function addReview(req, res, next) {
     professionalService.addReview(req.body, req.params.id)
         .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function getCreditCardDetails(req, res, next) {
+    memberService.getCreditCardDetails(req.params.id)
+        .then(cardDetails => res.json(cardDetails))
+        .catch(err => next(err));
+}
+
+function getBankDetails(req, res, next) {
+    professionalService.getBankAccountDetails(req.params.id)
+        .then(bankDetails => res.json(bankDetails))
         .catch(err => next(err));
 }
