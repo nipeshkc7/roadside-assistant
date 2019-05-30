@@ -1,5 +1,6 @@
 require('rootpath')();
 const express = require('express');
+const consola = require('consola');
 const cors = require('cors');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -26,9 +27,12 @@ app.use(errorHandler);
 // Start server
 const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 const server = http.Server(app);
-server.listen(port, function() {
-    console.log('Server is listening on port ' + port);
-});
+server.listen(port);
+consola.ready({
+    message: `Server listening on ${port}`,
+    badge: true
+})
+consola.wrapConsole();
 
 const io = socketIo(server);
 

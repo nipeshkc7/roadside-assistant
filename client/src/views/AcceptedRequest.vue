@@ -25,6 +25,7 @@ li {
                                 </p>
                                 <p><strong>Name:</strong> {{user.firstName + " " + user.lastName}}</p>
                                 <p v-if="user.quote"><strong>Quote for service:</strong> ${{user.quote}}</p>
+                                <br>
                                 <Button @click="selectPro(user.username)">Select this professional</Button>
                                 <Divider orientation="left">Reviews</Divider>
                                 <ul v-if="user.reviews.length">
@@ -85,7 +86,11 @@ export default {
         }),
         // TODO: Add an emit event that sends the usernames of the other responders so they can be notified of the rejection
         selectPro(username) {
-            this.updateRequestStatus({status: 'in-progresss'}, this.$store.state.requests.request[0]._id);
+            const sendData = {
+                status: 'in-progress',
+                id: this.$store.state.requests.request._id
+            }
+            this.updateRequestStatus(sendData);
             this.socket.emit('chooseProfessional', username, this.$store.state.requests.request._id);
         }
     },

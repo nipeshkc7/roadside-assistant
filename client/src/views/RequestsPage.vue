@@ -76,11 +76,36 @@ export default {
             const lon = this.location.lon;
             requestService.getInArea(lat, lon).then(requests => this.requests = requests);
         },
+        //* Generalized this method to reduce code, since the only difference was the responder objects fields
+        okMethod(index, memberType) {
+            var responder = null;
+
+            if (memberType === 'Per-service') {
+                responder = {
+                    responderID: authenticationService.currentUserValue._id,
+                    quote: quotePrice
+                };
+            } else {
+                responder = {
+                    responderID: authenticationService.currentUserValue._id,
+                };
+            }
+
+            const sendParam = {
+                username: authenticationService.currentUserValue.username
+            }
+            const roomId = this.requests[index].room;
+            userService.update({room: roomId}, authenticationService.currentUserValue._id);
+            requestService.update(responder, this.requests[index]._id);
+            this.socket.emit('room', roomId);
+            this.socket.emit('acceptRequest', sendParam, roomId);
+            this.$Message.info('Service request accepted');
+        },
         accept(index) {
             userService.getMembershipType(this.requests[index].memberID).then(membershipType => {
-                const membershipTypee = membershipType;
                 let quotePrice = null;
                 
+                //? If the member requesting the service is a per-service customer, ask the professional for a quote(price) to answer the service
                 if (membershipType == "Per-service") {
                     this.$Modal.confirm({
                         render: (h) => {
@@ -98,40 +123,16 @@ export default {
                             })
                         },
                         onOk: () => {
-                            const responder = {
-                                responderID: authenticationService.currentUserValue._id,
-                                quote: quotePrice
-                            };
-                            const sendParam = {
-                                username: authenticationService.currentUserValue.username
-                            }
-                            const roomId = this.requests[index].room;
-                            userService.update({room: roomId}, authenticationService.currentUserValue._id);
-                            requestService.update(responder, this.requests[index]._id);
-                            this.socket.emit('room', roomId);
-                            this.socket.emit('acceptRequest', sendParam, roomId);
-                            //this.$store.state.requests.request = this.requests[index];
-                            this.$Message.info('Service request accepted');
+                            this.okMethod(index, membershipType);
                         }
                     })
+                  //? Else just ask the professional if they want to answer the service since subscription members don't pay a direct fee
                 } else if(membershipType == "Subscription") {
                     this.$Modal.confirm({
                         title: 'Accept Service Request',
                         content: '<p>Are you sure you want to accept this service request?</p>',
                         onOk: () => {
-                            const responder = {
-                                responderID: authenticationService.currentUserValue._id,
-                            };
-                            const sendParam = {
-                                username: authenticationService.currentUserValue.username
-                            }
-                            const roomId = this.requests[index].room;
-                            userService.update({room: roomId}, authenticationService.currentUserValue._id);
-                            requestService.update(responder, this.requests[index]._id);
-                            this.socket.emit('room', roomId);
-                            this.socket.emit('acceptRequest', sendParam, roomId);
-                            //this.$store.state.requests.request = this.requests[index];
-                            this.$Message.info('Service request accepted');
+                            this.okMethod(index, membershipType);
                         }
                     });
                 }

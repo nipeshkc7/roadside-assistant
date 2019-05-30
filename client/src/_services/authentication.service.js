@@ -1,5 +1,4 @@
 import { BehaviorSubject } from 'rxjs';
-
 import config from 'config';
 import { requestOptions, handleResponse } from '@/_helpers';
 
@@ -9,6 +8,7 @@ export const authenticationService = {
     login,
     logout,
     currentUser: currentUserSubject.asObservable(),
+    get userValue () { return currentUserSubject },
     get currentUserValue () { return currentUserSubject.value }
 };
 

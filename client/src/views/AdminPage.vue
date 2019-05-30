@@ -94,9 +94,16 @@ export default {
             deleteUser: 'delete'
         }),
         deleteU(index, id) {
-            this.$Message.info(id);
-            this.deleteUser(id);
-            this.users.splice(index, 1);
+            // Adds another layer to deleting a user, even though redundant it reduces human error
+            this.$Modal.confirm({
+                title: 'Delete ' + id,
+                content: '<p>Are you sure you want to delete this user?</p>',
+                onOk: () => {
+                    this.$Message.info(id + ' has been deleted from the system.');
+                    this.deleteUser(id);
+                    this.users.splice(index, 1); // Removes the user from the table
+                }
+            })
         }
     }
 };

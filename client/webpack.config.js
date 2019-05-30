@@ -1,6 +1,7 @@
 const path = require('path');
+const WebpackBar = require('webpackbar');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     mode: 'development',
@@ -71,7 +72,8 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new HtmlWebpackPlugin({ template: './src/index.html' })
+        new HtmlWebpackPlugin({ template: './src/index.html' }),
+        new WebpackBar()
     ],
     devServer: {
         historyApiFallback: true

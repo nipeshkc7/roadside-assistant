@@ -54,6 +54,16 @@ export const router = new Router({
         {
             path: '/update-details',
             component: UpdateUserDetailsPage,
+            meta: { authorize: ['Member', 'Professional'] } // Both members and professionals should be able to update details
+        },
+        {
+            path: '/update-bank',
+            component: UpdateBankPage,
+            meta: { authorize: ['Professional'] }
+        },
+        {
+            path: '/update-card',
+            component: UpdateCardPage,
             meta: { authorize: ['Member'] }
         },{
             path: '/update-bank',

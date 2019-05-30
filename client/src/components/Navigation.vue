@@ -41,9 +41,7 @@
                         </template>
                         <MenuItem name="Account-1">Settings</MenuItem>
                         <MenuItem name="Account-2">Help</MenuItem>
-                        <MenuItem name="Account-4" v-if="account.user.role === 'Member'" to="/update-details">Update Profile</MenuItem>
-                        <MenuItem name="Account-4" v-if="account.user.role === 'Member'" to="/update-card">Add/Update Card details</MenuItem>
-                        <MenuItem name="Account-4" v-if="account.user.role === 'Professional'" to="/update-bank">Add/Update Bank details</MenuItem>
+                        <MenuItem name="update-profile" v-if="account.user.role === 'Member' || account.user.role === 'Professional'" to="/update-details">Update Account</MenuItem>
                         <MenuItem name="Account-3"><a @click="logout()" class="logoutLink">Logout</a></MenuItem>
                     </Submenu>
                 </div>

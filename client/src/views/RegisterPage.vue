@@ -76,7 +76,6 @@ export default {
                 callback();
             }
         };
-
         return {
             registrationList: [
                 {
@@ -105,6 +104,7 @@ export default {
                 firstName: '',
                 lastName: '',
                 membershipType: null,
+                expirationDate: null
             },
             submitted: false,
             // Validation rules
@@ -136,6 +136,12 @@ export default {
     },
     methods: {
         ...mapActions('account', ['register']),
+        appendLeadingZeroes(n){
+            if(n <= 9){
+                return "0" + n;
+            }
+            return n
+        },
         onSubmit(name) {
             this.$refs[name].validate((valid) => {
                 this.submitted = true;

@@ -15,6 +15,10 @@ router.put('/:id', authorize(), update);
 router.delete('/:id', authorize('Admin'), _delete); // Admin only route
 router.put('/creditCard/:id', authorize('Member'), addCard); // Member only route
 router.put('/bankAccount/:id', authorize('Professional'), addBankAccount); // Professional only route
+router.get('/getMemberType/:id', authorize(), getMembershipType);
+router.post('/:id/addReview', authorize('Member'), addReview);
+router.get('/creditCard/:id', authorize(), getCreditCardDetails);
+router.get('/bankAccount/:id', authorize(), getBankDetails);
 
 module.exports = router;
 
@@ -77,5 +81,29 @@ function addCard(req, res, next) {
 function addBankAccount(req, res, next) {
     professionalService.addBankAccount(req.params.id, req.body)
         .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function getMembershipType(req, res, next) {
+    memberService.getMembershipType(req.params.id)
+        .then(membershipType => membershipType ? res.json(membershipType) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
+function addReview(req, res, next) {
+    professionalService.addReview(req.body, req.params.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function getCreditCardDetails(req, res, next) {
+    memberService.getCreditCardDetails(req.params.id)
+        .then(cardDetails => res.json(cardDetails))
+        .catch(err => next(err));
+}
+
+function getBankDetails(req, res, next) {
+    professionalService.getBankAccountDetails(req.params.id)
+        .then(bankDetails => res.json(bankDetails))
         .catch(err => next(err));
 }
