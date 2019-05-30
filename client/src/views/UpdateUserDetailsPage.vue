@@ -15,6 +15,13 @@
     justify-content: center;
     padding: 20px 25px;
 }
+
+p {
+    font-size: 12px;
+    padding: 0 0 10px 0;
+    line-height: 1;
+}
+
 </style>
 
 <template>
@@ -23,9 +30,9 @@
         <div class="content">
             <div>
                 <Row>
-                    <Col span="4"><br></Col>
+                    <update-sidebar class="sidebar" activeName="updateDetails"></update-sidebar>
                     <Col span="16" class="updateForm">
-                        <Card :padding="30" style="width:800px">
+                        <Card :padding="30" style="width:600px">
                             <p slot="title">Update your details</p>
                             <Form @submit.prevent="onSubmit" label-position="top" ref="userdata" :model="userdata" >
                                 <FormItem label="First name" prop="firstName">
@@ -40,16 +47,13 @@
                                     <Input type="text" v-model="userdata.username" placeholder="Enter your username" name="username" :disabled="uname_toggle"></Input>
                                     <span class="edit_btn" v-on:click="uname_toggle=!uname_toggle">Edit</span>
                                 </FormItem>
-                                <!-- <FormItem label="Password" prop="password">
-                                    <Input type="password" v-model="userdata.password" placeholder="Enter your password" name="password" :disabled="pwd_toggle"></Input>
-                                    <span class="edit_btn"  v-on:click="pwd_toggle=!pwd_toggle">Edit</span>
-                                </FormItem> -->
                                 <FormItem>
                                     <Button type="primary" @click="onSubmit('userdata')">Done</Button>
                                 </FormItem>
                             </Form>
                         </Card>
                     </Col>
+                <Col span="4"></Col>
                 </Row>
             </div>
         </div>
@@ -59,6 +63,7 @@
 <script>
 import { userService,authenticationService } from '@/_services';
 import Navigation from '@/components/Navigation';
+import updateDetailsSideNav from '../components/updateDetailsSidebar.vue';
 
 export default{
     data() {
@@ -75,7 +80,8 @@ export default{
         }
     },
     components: {
-        'Navigation': Navigation
+        'Navigation': Navigation,
+        'updateSidebar': updateDetailsSideNav,
     },
     methods: {
         onSubmit(name) { // name is the name of the data we want to update

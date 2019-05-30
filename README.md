@@ -42,13 +42,13 @@
 
 ## Todo List: Arpan
 
-- [ ] Add a sidebar to the UpdateUserDetailsPage.vue (look at the MakeRequestPage.vue for an example, basically like the RequestSidebar.vue but for updating account details)
+- [x] Add a sidebar to the UpdateUserDetailsPage.vue (look at the MakeRequestPage.vue for an example, basically like the RequestSidebar.vue but for updating account details)
 
-- [ ] Set the initial page as the UpdateUserPage.vue (for the sidebar mentioned above)
+- [x] Set the initial page as the UpdateUserPage.vue (for the sidebar mentioned above)
 
-- [ ] Add a menu item for add/update bank account details page for the sidebar mentioned above (should only be visible to professionals)
+- [x] Add a menu item for add/update bank account details page for the sidebar mentioned above (should only be visible to professionals)
 
-- [ ] Add a menu item for add/update credit card details page for the sidebar mentioned above (should only be visible to members)
+- [x] Add a menu item for add/update credit card details page for the sidebar mentioned above (should only be visible to members)
 
 - [x] Add add/update bank account details page to the front-end for professionals.
 

@@ -5,18 +5,30 @@
     justify-content: center;
     padding: 20px 25px;
 }
+
+.alert {
+  padding: 20px;
+  background-color: #4CAF50;;
+  color: white;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 18px;
+}
+
 </style>
 
 <template>
     <div>
         <Navigation activeName=""></Navigation>
         <div class="content">
-            <div v-if="toggleSuccessMsg" class="alert">Successfully changed Bank details.</div>
-            <div v-else>
+            <div>
+                <Modal v-model="toggleMsg" title="Alert">        
+                    <p>{{modalMsg}}</p>
+               </Modal>
                 <Row>
-                    <Col span="4"><br></Col>
+                    <update-sidebar class="sidebar" activeName="updateBank"></update-sidebar>
                     <Col span="16" class="updateForm">
-                        <Card :padding="30" style="width:800px">
+                        <Card :padding="30" style="width:600px">
                             <p slot="title">Update your Bank details</p>
                             <Form @submit.prevent="onSubmit" label-position="top" ref="bankDets" :model="bankDets" >
                                 <FormItem label="BSB" prop="bsb">
@@ -42,6 +54,7 @@
 import { mapState, mapActions } from 'vuex';
 import { userService,authenticationService } from '@/_services';
 import Navigation from '@/components/Navigation';
+import updateDetailsSideNav from '../components/updateDetailsSidebar.vue';
 
 export default{
     data () {
@@ -50,21 +63,24 @@ export default{
                 bsb: '',
                 accountNumber: '',
             },
-            toggleSuccessMsg:false,          
+            toggleMsg:false, 
+            modalMsg:'',
         }
     },
     components: {
-        'Navigation': Navigation
+        'Navigation': Navigation,
+        'update-sidebar': updateDetailsSideNav,
     },
     methods: {
         onSubmit(){
             const promiseObj=userService.updateBank(this.bankDets, authenticationService.currentUserValue._id);
             promiseObj.then(() => {
                 console.log("success");
-                this.toggleSuccessMsg=true;                                     
-                setTimeout(() => {this.toggleSuccessMsg=false; },3000);
+                this.modalMsg='You have successfully changed your bank details';
+                this.toggleMsg=true;
                 },
-                ()=>{console.log("failiure");
+                ()=>{this.toggleMsg=true;
+                    this.modalMsg='Failure to update Bank details'
             })
         }
     }
